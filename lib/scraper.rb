@@ -21,13 +21,16 @@ class Scraper
             artist.hangul = row.css("td")[2].text
             artist.full_name = row.css("td")[3].text
             artist.dob = row.css("td")[5].text
-            artist.label = row.css("td")[7].text
             artist.gender = row.css("td")[9].text
             artist.hometown = row.css("td")[10].text
             artist.crew = row.css("td")[8].text
             artist.position = row.css("td")[13].text
+            if row.css("td")[7].text != ""
+                artist.label = row.css("td")[7].text
+            else
+                artist.label = "Unsigned or Unknown"
+            end
         end
-
     end
 
     # def print_database

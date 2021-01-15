@@ -5,23 +5,24 @@ require 'pry'
 
 class Artist
     # attr_accessor :name, :group, :position, :changes, :direction
-    attr_accessor :name, :full_name, :hangul, :dob, :label, :gender, :position, :aka, :hometown, :crew, :sort_by_label, :unsigned
+    attr_accessor :name, :full_name, :hangul, :dob, :label, :gender, :position, :aka, :hometown, :crew
 
     @@all = []
-    @@soda = []
+    @@labels = []
 
     def initialize
-        @name = name
-        @full_name = full_name
-        @hangul = hangul
-        @dob = dob
-        @gender = gender
-        @position = position
-        @aka = aka
-        @hometown = hometown
-        @crew = crew
-        @label = label  ||= "Unsigned"
+        # @name = name
+        # @full_name = full_name
+        # @hangul = hangul
+        # @dob = dob
+        # @gender = gender
+        # @position = position
+        # @aka = aka
+        # @hometown = hometown
+        # @crew = crew
+        # @label = label  ||= "Unsigned or Unknown"
         @@all << self
+        @@labels << @label
     end
 
     def self.all
@@ -32,63 +33,50 @@ class Artist
         @@all.clear
     end
 
-    def name
-        @name
+    def self.labels
+        @@labels
     end
 
-    def full_name
-        @full_name
-    end
-
-    def hangul
-        @hangul
-    end
-
-    def dob
-        @dob
-    end
-
-    def label
-        @label
-    end
-
-    def gender
-        @gender
-    end
-
-    def position
-        @position
-    end
-
-    def aka
-        @aka
-    end
-
-    def hometown
-        @hometown
-    end
-
-    def crew
-        @crew
-    end
-
-
-    def unsigned
-        self.all.each do |rapper|
-            if rapper.label == "" || nil
-                @@soda << rapper
-            end
-        end
-    end
-
-    def self.soda
-        @@soda
-    end
-
-    # def self.sort_by_label
-    #     sortArt = self.all.sort_by {|label, name| label <=> name}
-    #     return sortArt
+    # def name
+    #     @name
     # end
-    
+
+    # def full_name
+    #     @full_name
+    # end
+
+    # def hangul
+    #     @hangul
+    # end
+
+    # def dob
+    #     @dob
+    # end
+
+    # def label
+    #     @label
+    # end
+
+    # def gender
+    #     @gender
+    # end
+
+    # def position
+    #     @position
+    # end
+
+    # def aka
+    #     @aka
+    # end
+
+    # def hometown
+    #     @hometown
+    # end
+
+    # def crew
+    #     @crew
+    # end
+
+
 
 end
