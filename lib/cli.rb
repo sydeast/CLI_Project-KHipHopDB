@@ -3,54 +3,58 @@ require 'open-uri'
 require 'pry'
 
 class Cli
-attr_accessor :print_artist
+    # Calls the Cli and scraper to start with a welcome msg
     def call
-    Scraper.new.create_database
+        Scraper.new.create_database
         puts "안녕하세요!! Welcome to the Korean Hip/Hop and R&B Database!
- With my help, I can show you profiles on Korea's hottest non K-Pop artists. Please note information may be incorrect or incomplete."
+        With my help, I can show you profiles on Korea's hottest non K-Pop artists. Please note information may be incorrect or incomplete."
         start
     end
 
+    #defines Start method, gathers user's inputs
     def start
+        # artistMap variable creates mapping of artists by label by calling retrieve_artists_by_label method
+        artistMap = retrieve_artists_by_label
+        # while true loops allows user to continue to search through the database
         while true
             puts ""
-            puts "To start please select one of the following labels' number."
-            artistMap = retrieve_artists_by_label
+            puts "Please select one of the following label numbers or minus one [-1] to exit."
+            #creates and dsiplays a listing of all unique labels with a number for user to select from using artistMap variable
             indexed_labels(artistMap)
-            # indexed_labels
-
-         # input = gets.strip.downcase
-         input = gets.strip.to_i
-            # binding.pry
-         artistProfile = artistMap[artistMap.keys[input-1]]
-         print_database(artistProfile)
-            # if input == "y"
-         # find_all_inLabel(input)
-            # get_label
-
-            # puts "Thank you! I will close now! 안녕! Bye!"
-            # exit
-            # rapper = Artist.all[input]
-            # self.print_artist
-            # elsif
-            # find_all_inLabel(input)
-            puts ""
-            puts "Would you like to see another label? [y/n]"
-            puts ""
-            input2 = gets.strip.downcase
-            if input2 == 'y'
-                start
-            else
+            # input variable to capture user's selection from the indexed_label list
+            input = gets.strip.to_i
+            # if/elsif/else to validate first input and continue or discontinue program
+            if input >= 1 && input <= artistMap.keys.length
+                #artistProfile variable uses the user's input to return all values (artists) associated to the selected label key of the artistMap hash
+                artistProfile = artistMap[artistMap.keys[input-1]]
+                #Prints the artists' profiles (or values) as a str based on the previously selected key
+                print_database(artistProfile)
+                puts ""
+                puts "Would you like to see another label? [y/n]"
+                puts ""
+                # records the second input to check if user would like to continue
+                input_2 = gets.strip.downcase
+                # if/elsif/else to validate secound input and continue or disconue program
+                if input_2 == 'y'
+                    start
+                elsif input_2 == 'n'
+                    puts ""
+                    puts "Thank you! I will close now! 안녕! Bye!"
+                    exit
+                else
+                    puts ""
+                    puts "죄송합니다! I'm sorry. I did not understand. Let's try again!"
+                    start
+                end
+            elsif input == -1
                 puts ""
                 puts "Thank you! I will close now! 안녕! Bye!"
-                exit
+                    exit
+            else
+                puts ""
+                puts "죄송합니다! I'm sorry. I did not understand. Let's try again!"
+                start
             end
-            # puts "I'm sorry. I cannot do that at this time"
-            # input = gets.chomp
-            #     self.print_database
-            # elsif input == "n" || !"y"
-            # puts ""
-
         end
     end
 
@@ -70,49 +74,45 @@ attr_accessor :print_artist
         end
     end
 
-# Creates a hash map by label of all Artist objects
+    # Creates a hash map by label of all Artist objects
     def retrieve_artists_by_label
-            artistMap = Hash.new(nil)
-            Artist.all.each do |rapper|
-                if artistMap[rapper.label] == nil
-                    newArtistArr = []
-                    newArtistArr << rapper
-                    artistMap[rapper.label] = newArtistArr
-                else
-                    existingArtistArr = artistMap[rapper.label]
-                    existingArtistArr << rapper
-                end
+        artistMap = Hash.new(nil)
+        Artist.all.each do |rapper|
+            if artistMap[rapper.label] == nil
+                newArtistArr = []
+                newArtistArr << rapper
+                artistMap[rapper.label] = newArtistArr
+            else
+                existingArtistArr = artistMap[rapper.label]
+                existingArtistArr << rapper
             end
-            artistMap
+        end
+        artistMap
     end
 
-
-
-
-    # Prints the entire database as a string-ifed item
-    # artistProfile = artistMap[artistMap.keys[input-1]]
+    # Prints the database as a string-ifed entity
     def print_database(artistProfile)
        artistProfile.each do |rapper|
             if rapper.name && rapper.name != ""
                 puts "Name: #{rapper.name}"
                 puts "  Hangul: #{rapper.hangul}"
                 if rapper.aka != ""
-                puts "  As known As: #{rapper.aka}"
+                    puts "  As known As: #{rapper.aka}"
                 end
                 puts "  Birth Name: #{rapper.full_name}"
                 puts "  Birthday: #{rapper.dob}"
                 puts "  Gender: #{rapper.gender}"
                 if rapper.hometown != ""
-                puts "  Hometown: #{rapper.hometown}"
+                    puts "  Hometown: #{rapper.hometown}"
                 end
                 if rapper.label != ""
-                puts "  Label: #{rapper.label}"
+                    puts "  Label: #{rapper.label}"
                 end
-                puts "  Position: #{rapper.position}"
+                    puts "  Position: #{rapper.position}"
                 if rapper.crew != ""
-                puts "  Member of: #{rapper.crew}"
+                    puts "  Member of: #{rapper.crew}"
                 end
-                puts "---------"
+                    puts "---------"
             end
         end
     end

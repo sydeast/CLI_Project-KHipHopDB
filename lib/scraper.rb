@@ -33,30 +33,5 @@ class Scraper
         end
     end
 
-    # def print_database
-    #     self.create_database
-    #     Artist.all.each do |rapper|
-    #         if rapper.name && rapper.name != ""
-    #             puts "Name: #{rapper.name}"
-    #             puts "  Hangul: #{rapper.hangul}"
-    #         if rapper.aka != ""
-    #             puts "  As known As: #{rapper.aka}"
-    #         end
-    #             puts "  Birth Name: #{rapper.full_name}"
-    #             puts "  Birthday: #{rapper.dob}"
-    #             puts "  Gender: #{rapper.gender}"
-    #         if rapper.hometown != ""
-    #             puts "  Hometown: #{rapper.hometown}"
-    #         end
-    #         if rapper.label != ""
-    #             puts "  Label: #{rapper.label}"
-    #         end
-    #             puts "  Position: #{rapper.position}"
-    #         if rapper.crew != ""
-    #             puts "  Member of: #{rapper.crew}"
-    #             end
-    #         end
-    #     end
-    # end
 
 end
